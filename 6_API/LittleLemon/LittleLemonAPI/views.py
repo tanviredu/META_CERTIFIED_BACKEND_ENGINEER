@@ -15,11 +15,13 @@ def books(request):
         print(request.POST)
         title  = request.POST.get("title")
         author = request.POST.get("author")
-        price  = request.POST.get("price")
-        book   = Book()
-        book.title = title
+        price       = request.POST.get("price")
+        inventory   = request.POST.get("inventory")
+        book        = Book()
+        book.title  = title
         book.author = author
-        book.price = price
+        book.price  = price
+        book.inventory = inventory
         try:
             book.save()
             return JsonResponse(model_to_dict(book))
