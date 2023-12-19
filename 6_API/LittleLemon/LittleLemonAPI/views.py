@@ -10,20 +10,20 @@ from django.forms.models import model_to_dict
 def books(request):
     if request.method == "GET":
         bks = Book.objects.all().values()
-        return JsonResponse({"books":list(bks)},safe=False)
+        return JsonResponse({"books": list(bks)}, safe=False)
     elif request.method == "POST":
         print(request.POST)
-        title  = request.POST.get("title")
+        title = request.POST.get("title")
         author = request.POST.get("author")
-        price       = request.POST.get("price")
-        inventory   = request.POST.get("inventory")
-        book        = Book()
-        book.title  = title
+        price = request.POST.get("price")
+        inventory = request.POST.get("inventory")
+        book = Book()
+        book.title = title
         book.author = author
-        book.price  = price
+        book.price = price
         book.inventory = inventory
         try:
             book.save()
             return JsonResponse(model_to_dict(book))
         except IntegrityError:
-            return JsonResponse({"Error":"true","message":"required field Missing"})
+            return JsonResponse({"Error": "true", "message": "required field Missing"})
